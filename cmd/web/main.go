@@ -2,8 +2,9 @@ package main
 
 import (
 	"flag"
-	"log"
 	"net/http"
+
+	"github.com/charmbracelet/log"
 )
 
 func main() {
@@ -28,8 +29,9 @@ func main() {
 	mux.HandleFunc("GET /snippet/create", snippetCreate)
 	mux.HandleFunc("POST /snippet/create", snippetCreatePost)
 
-	log.Printf("starting server on %s", *addr)
+	format := "%s addr=%s"
+	log.Infof(format, "starting server", *addr)
 
 	err := http.ListenAndServe(*addr, mux)
-	log.Fatal(err)
+	log.Fatal(err.Error())
 }
