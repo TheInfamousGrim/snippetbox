@@ -6,12 +6,15 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/TheInfamousGrim/snippetbox/internal/models"
 	"github.com/charmbracelet/log"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type application struct{}
+type application struct {
+	snippets *models.SnippetModel
+}
 
 func main() {
 	//* Flags
@@ -27,7 +30,9 @@ func main() {
 	}
 	defer db.Close()
 
-	app := &application{}
+	app := &application{
+		snippets: &models.SnippetModel{DB: db},
+	}
 
 	format := "%s addr=%s"
 	log.Infof(format, "starting server", *addr)
